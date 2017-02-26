@@ -3,7 +3,7 @@ import compression from 'compression';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import path from 'path';
-import IntlWrapper from '../client/modules/Intl/IntlWrapper';
+
 
 // Webpack Requirements
 import webpack from 'webpack';
@@ -26,7 +26,7 @@ import { configureStore } from '../client/store';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { match, RouterContext } from 'react-router';
+import { matchPath, RouterContext } from 'react-router';
 import Helmet from 'react-helmet';
 
 // Import required modules
@@ -103,8 +103,11 @@ const renderError = err => {
 };
 
 // Server Side Rendering based on routes matched by React-router.
+
+/*
+
 app.use((req, res, next) => {
-  match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {
+  matchPath({ routes, location: req.url }, (err, redirectLocation, renderProps) => {
     if (err) {
       return res.status(500).end(renderError(err));
     }
@@ -123,9 +126,9 @@ app.use((req, res, next) => {
       .then(() => {
         const initialView = renderToString(
           <Provider store={store}>
-            <IntlWrapper>
+          
               <RouterContext {...renderProps} />
-            </IntlWrapper>
+          
           </Provider>
         );
         const finalState = store.getState();
@@ -137,7 +140,7 @@ app.use((req, res, next) => {
       })
       .catch((error) => next(error));
   });
-});
+}); */
 
 // start app
 app.listen(serverConfig.port, (error) => {
