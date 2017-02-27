@@ -4,6 +4,7 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 var medicationSchema = new mongoose.Schema();
 medicationSchema.add({
     name: {type: String, required: true},
+    manufacturer:{ type: String, required: true},
     form: { type: String, required: true},
     packaging: { type: String, required: true},
     active_substances: [{ 
