@@ -3,34 +3,23 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var medicationSchema = new mongoose.Schema();
 medicationSchema.add({
-    address: {type: String, required: true},
-    surface: {type: Number, required: true},
-    price: {type: Number, required: true},
-    structure: {type: String, required: true},
-    floor: {type: Number, required: true},
-    heating: {type: String, required: true},
-    minimal_duration_of_a_rent: {type: Number, required: true}, 
-    furnished: {type: Boolean, required: true},
-    parking: {type: Boolean, required: true},
-    cable: {type: Boolean, required: true},
-    internet: {type: Boolean, required: true},
-    phone: {type: Boolean, required: true},
-    elevator: {type: Boolean, required: true},
-    climate: {type: Boolean, required: true},
-    terrace: {type: Boolean, required: true},
-    pets: {type: Boolean, required: true},
-    intercom: {type: Boolean, required: true},
-    alarm: {type: Boolean, required: true},
-    cameras: {type: Boolean, required: true},
-    expenses: [{
-        name: String,
-        estimated_price: Number 
-    }],
-    owner: {
-        owner_id: ObjectId,
-        type_of_owner: String 
-    },
-    pictures: [String] 
+    name: {type: String, required: true},
+    form: { type: String, required: true},
+    packaging: { type: String, required: true},
+    active_substances: [{ 
+                            name: String, required: true,
+                            quantity: Number, required: true,
+                            quantity_type: String, required: true,
+                            }],
+    indications: [{ 
+                    animal_type: String, required: true,
+                    text: String, required: true,
+                    keywords: [String], required: true
+                }],
+    warnings: { type: String, required: true},
+    undesired_reactions: { type: String, required: true}
+    counterindications: {type: String, required: true},
+    carence: { type:Number, required: true}
     
 });
 
