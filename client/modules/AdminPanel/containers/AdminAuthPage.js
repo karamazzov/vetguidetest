@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 
 class AdminAuthPage extends Component {
   render() {
     return (
 
-    <div>
-
-     <h1>Here admin authentication should go</h1>
-     
-
-    </div>
+    	<h1>auth here</h1>
 
     );
   }

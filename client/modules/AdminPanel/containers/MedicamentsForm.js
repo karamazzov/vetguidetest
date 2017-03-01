@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
-import { addMedicament } from '../AdminActions'
+import { addMedicament } from '.././AdminActions'
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 

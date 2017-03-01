@@ -5,6 +5,12 @@ import bodyParser from 'body-parser';
 import path from 'path';
 
 
+import React from 'react';
+import Helmet from 'react-helmet';
+import { ServerRouter, createServerRenderContext } from 'react-router';
+import { renderToString } from 'react-dom/server';
+import { Admin } from '.././client/modules/AdminPanel/containers/Admin';
+
 // Webpack Requirements
 import webpack from 'webpack';
 import config from '../webpack.config.dev';
@@ -21,16 +27,10 @@ if (process.env.NODE_ENV === 'development') {
   app.use(webpackHotMiddleware(compiler));
 }
 
-// React And Redux Setup
-import { configureStore } from '../client/store';
-import { Provider } from 'react-redux';
-import React from 'react';
-import { renderToString } from 'react-dom/server';
-import { matchPath, RouterContext } from 'react-router';
-import Helmet from 'react-helmet';
+
 
 // Import required modules
-import routes from '../client/routes';
+
 import { fetchComponentData } from './util/fetchData';
 import posts from './routes/post.routes';
 import dummyData from './dummyData';
@@ -58,7 +58,8 @@ app.use(Express.static(path.resolve(__dirname, '../dist')));
 app.use('/api', posts);
 
 // Render Initial HTML
-const renderFullPage = (html, initialState) => {
+
+const renderFullPage = (html) => {
   const head = Helmet.rewind();
 
   // Import Manifests
@@ -77,12 +78,13 @@ const renderFullPage = (html, initialState) => {
 
         ${process.env.NODE_ENV === 'production' ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />` : ''}
         <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'/>
+        <link rel='stylesheet' href="https://cdn.jsdelivr.net/semantic-ui/2.2.7/semantic.min.css"/>
         <link rel="shortcut icon" href="http://res.cloudinary.com/hashnode/image/upload/v1455629445/static_imgs/mern/mern-favicon-circle-fill.png" type="image/png" />
       </head>
       <body>
         <div id="root">${html}</div>
         <script>
-          window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
+          
           ${process.env.NODE_ENV === 'production' ?
           `//<![CDATA[
           window.webpackManifest = ${JSON.stringify(chunkManifest)};
@@ -95,52 +97,26 @@ const renderFullPage = (html, initialState) => {
   `;
 };
 
-const renderError = err => {
-  const softTab = '&#32;&#32;&#32;&#32;';
-  const errTrace = process.env.NODE_ENV !== 'production' ?
-    `:<br><br><pre style="color:red">${softTab}${err.stack.replace(/\n/g, `<br>${softTab}`)}</pre>` : '';
-  return renderFullPage(`Server Error${errTrace}`, {});
-};
+app.get('*', (req, res, next) => {
+  const context = createServerRenderContext();
+  const html = renderToString(
+      <ServerRouter
+        location={req.url}
+        context={context}
+      >
+         <Admin />
 
-// Server Side Rendering based on routes matched by React-router.
+      </ServerRouter>
+    )
 
-/*
+    res
+      .set('Content-Type', 'text/html')
+      .status(200)
+      .end(renderFullPage(html));
 
-app.use((req, res, next) => {
-  matchPath({ routes, location: req.url }, (err, redirectLocation, renderProps) => {
-    if (err) {
-      return res.status(500).end(renderError(err));
-    }
 
-    if (redirectLocation) {
-      return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-    }
-
-    if (!renderProps) {
-      return next();
-    }
-
-    const store = configureStore();
-
-    return fetchComponentData(store, renderProps.components, renderProps.params)
-      .then(() => {
-        const initialView = renderToString(
-          <Provider store={store}>
-          
-              <RouterContext {...renderProps} />
-          
-          </Provider>
-        );
-        const finalState = store.getState();
-
-        res
-          .set('Content-Type', 'text/html')
-          .status(200)
-          .end(renderFullPage(initialView, finalState));
-      })
-      .catch((error) => next(error));
-  });
-}); */
+  
+});
 
 // start app
 app.listen(serverConfig.port, (error) => {
