@@ -18,7 +18,7 @@ medicationSchema.add({
                     keywords: [String], required: true
                 }],
     warnings: { type: String, required: true},
-    undesired_reactions: { type: String, required: true}
+    undesired_reactions: { type: String, required: true},
     counterindications: {type: String, required: true},
     carence: { type:Number, required: true}
     

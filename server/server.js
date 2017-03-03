@@ -9,7 +9,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { ServerRouter, createServerRenderContext } from 'react-router';
 import { renderToString } from 'react-dom/server';
-import { Admin } from '.././client/modules/AdminPanel/containers/Admin';
+import { Routes } from '.././client/routes';
 
 // Webpack Requirements
 import webpack from 'webpack';
@@ -104,7 +104,7 @@ app.get('*', (req, res, next) => {
         location={req.url}
         context={context}
       >
-         <Admin />
+         <Routes />
 
       </ServerRouter>
     )

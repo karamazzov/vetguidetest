@@ -1,8 +1,9 @@
 /* eslint-disable global-require */
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import { Route, IndexRoute, Match } from 'react-router';
 import App from './modules/App/App';
 import Admin from './modules/AdminPanel/containers/Admin';
+import AdminApp from './modules/AdminPanel/containers/AdminApp';
 import MedicamentsPage  from './modules/AdminPanel/containers/MedicamentsPage';
 import AdminAuthPage from './modules/AdminPanel/containers/AdminAuthPage';
 import MedicamentsForm from './modules/AdminPanel/containers/MedicamentsForm';
@@ -27,12 +28,15 @@ if (typeof require.ensure !== 'function') {
 
 // react-router setup with code-splitting
 // More info: http://blog.mxstbr.com/2016/01/react-apps-with-pages/
-export default (
-  <Route path="/" component={App}>
 
-    <IndexRoute component={Admin} />
-    <Route path='/medicaments' component={MedicamentsPage} />
-    <Route path='/medicaments/new' component={MedicamentsForm} />
 
-  </Route>
+export const Routes = () => (
+ 
+  <div>
+
+    <Match exactly pattern='/' component={App} />
+    <Match pattern='/admin' component={AdminApp} />
+
+  </div>
+
 ); 

@@ -8,24 +8,21 @@ import { BrowserRouter } from 'react-router';
 // Import Routes
 import routes from './routes';
 import AdminApp from './modules/AdminPanel/containers/AdminApp';
+import { Routes } from './routes';
 
-// Base stylesheet
-require('./main.css');
 
-export default function App(props) {
+export default function AppRoot(props) {
   return (
-
-  	<BrowserRouter>
 
   	<Provider store={props.store}>
 
+  		<BrowserRouter>
 
-    	<AdminApp />
+    		<Routes />
 
+    	</BrowserRouter>
 
     </Provider>
-
-    </BrowserRouter>
   );
 }
 

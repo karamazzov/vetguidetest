@@ -32,9 +32,11 @@ export function fetchMedicaments() {
 
 	return dispatch => {
 
-		fetch('/api/medicaments')
+		fetch('/medications')
 		.then(res => res.json())
-		.then(data => dispatch(setMedicaments(data.medicaments)));
+		.then(data => dispatch(setMedicaments(data.medicaments)))
+
+		.catch((err) => console.log(err));
 
 	}
 
@@ -44,7 +46,7 @@ export function addMedicament(data) {
 
 	return dispatch => {
 
-		return fetch('/api/medicaments', {
+		return fetch('/medications', {
 
 			method: 'post',
 			body: JSON.stringify(data),
@@ -52,7 +54,9 @@ export function addMedicament(data) {
         		"Content-Type": "application/json"
       		}
 
-		}).then(handleResponse);
+		}).then(handleResponse)
+
+		.catch((err) => console.log(err));
 
 	}
 

@@ -6,6 +6,8 @@ module.exports = {
 
   entry: path.resolve(__dirname, 'server/server.js'),
 
+  historyApiFallback: true,
+
   output: {
     path: __dirname + '/dist/',
     filename: 'server.bundle.js',

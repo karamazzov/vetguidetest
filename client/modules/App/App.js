@@ -49,7 +49,7 @@ export class App extends Component {
           
         </div>
 
-
+        <Link to='/admin'>GO ADMIN</Link>
     
 
       </div>

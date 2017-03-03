@@ -4,7 +4,7 @@ import MedicamentsList from '.././presentational/MedicamentsList';
 import { fetchMedicaments } from '.././AdminActions';
 
 class MedicamentsPage extends React.Component {
-
+  
   componentDidMount() {
 
     this.props.fetchMedicaments()
