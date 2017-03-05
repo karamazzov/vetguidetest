@@ -14,15 +14,15 @@ import { Routes } from './routes';
 export default function AppRoot(props) {
   return (
 
+  	<BrowserRouter>
+
   	<Provider store={props.store}>
 
-  		<BrowserRouter>
+    	<AdminApp />
 
-    		<Routes />
+     </Provider>
 
     	</BrowserRouter>
-
-    </Provider>
   );
 }
 
