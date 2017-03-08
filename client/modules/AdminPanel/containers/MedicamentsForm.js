@@ -3,131 +3,130 @@ import classnames from 'classnames';
 import { addMedicament } from '.././AdminActions'
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
+import { Field, FieldArray, reduxForm } from 'redux-form'
+import validate from './validate'
+import styles from './medicamentsform.css';
 
-class MedicamentsForm extends Component {
-
-	state = {
-
-		name: '',
-		manufacturer: '',
-		species: '',
-		errors: {},
-		loading: false,
-		done: false
-
-	}
-
-	handleChange = (e) => {
-
-		if(!!this.state.errors[e.target.name]){
-
-			let errors = Object.assign({}, this.state.errors);
-			delete errors[e.target.name];
-			this.setState({ [e.target.name]: e.target.value, errors });
-
-		}
-
-		else {
-
-			this.setState({ [e.target.name]: e.target.value });
-
-		}
-
-	}
-
-	handleSubmit = (e) => {
-
-		e.preventDefault();
-
-		let errors = {};
-    	if (this.state.name === '') errors.name = "Can't be empty";
-    	if (this.state.manufacturer === '') errors.manufacturer = "Can't be empty";
-    	if (this.state.species === '') errors.species = "Can't be empty";
-    	this.setState({ errors });
-    	const isValid = Object.keys(errors).length === 0
-
-		if(isValid) {
-
-			const { name, manufacturer, species } = this.state
-			this.setState({loading:true})	
-			this.props.addMedicament({name, manufacturer, species}).then(
-
-				() => { this.setState({ done: true }) },
-				(err) => err.response.json().then(({errors}) => this.setState({ errors, loading: false }))
-
-				);
-			
-
-		}
-
-
-	}
-
-  render() {
-
-  	const form = (
-
-  		<form className={classnames('ui', 'form', { loading: this.state.loading })} onSubmit={this.handleSubmit}>
-
-
-     {!!this.state.errors.global && <div className="ui negative message"><p>{this.state.errors.global}</p></div>}
-
-     	<div className={classnames('field', { error: !!this.state.errors.name })}>
-
-     		<label htmlFor='name'>Name</label>
-     		<input id='name'
-     		name='name'
-     		value={this.state.name}
-     		onChange={this.handleChange}
-     		/>
-     		<span>{this.state.errors.name}</span>
-
-     	</div>
-
-     	<div className={classnames('field', { error: !!this.state.errors.manufacturer })}>
-
-     		<label htmlFor='manufacturer'>Manufacturer</label>
-     		<input id='manufacturer'
-     		name='manufacturer'
-     		value={this.state.manufacturer}
-     		onChange={this.handleChange}
-     		/>
-     		<span>{this.state.errors.manufacturer}</span>
-
-     	</div>
-
-     	<div className={classnames('field', { error: !!this.state.errors.species })}>
-
-     		<label htmlFor='species'>Target Species</label>
-     		<input id='species'
-     		name='species'
-     		value={this.state.species}
-     		onChange={this.handleChange}
-     		/>
-     		<span>{this.state.errors.species}</span>
-
-     	</div>
-
-     	<div className='field'>
-     		
-     		<button className='ui primary button'>ADD</button>
-
-     	</div>
-
-     </form>
-
-  		)
-
-    return (
-
+const renderField = ({ input, label, type, meta: { touched, error } }) => (
+  <div className='field'>
+    <label>{label}</label>
     <div>
+      <input {...input} type={type} placeholder={label}/>
+      {touched && error && <span>{error}</span>}
+    </div>
+  </div>
+)
 
-     { this.state.done ? <Redirect to='/medicaments' /> : form }
+const renderSubstanceField = ({ fields, meta: { touched, error } }) => (
+
+   <div className={styles.activesubstance}>
+
+      <button className='ui basic button' type="button" onClick={() => fields.push({})}>New Active Substance</button>
+     
+   
+
+    {fields.map((as, index) =>
+      <li key={index}>
+        <button
+          type="button"
+          title="Remove Active Substance"
+          onClick={() => fields.remove(index)}/>
+        <h4 className="ui dividing header">Active Substance #{index + 1}</h4>
+         <div className='three fields'>
+            <Field
+              name={`${as}.name`}
+              type="text"
+              component={renderField}
+              label="Active Substance Name"/>
+            <Field
+              name={`${as}.intensity`}
+              type="text"
+              component={renderField}
+              label="Active Substance Intensity"/>
+            <Field
+              name={`${as}.unit`}
+              type="text"
+              component={renderField}
+              label="Unit"/>
+        </div>
+        
+      </li>
+
+    )}
 
     </div>
 
-    );
-  }
+)
+
+const renderSpeciesField = ({ fields, meta: { touched, error } }) => (
+
+   <div className={styles.activesubstance}>
+
+      <button className='ui basic button' type="button" onClick={() => fields.push({})}>New Specimen</button>
+     
+   
+   
+
+    {fields.map((specimen, index) =>
+      <li key={index}>
+        <button
+          type="button"
+          title="Remove Active Substance"
+          onClick={() => fields.remove(index)}/>
+        <h4 className="ui dividing header">Specimen #{index + 1}</h4>
+         <div className='three fields'>
+            <Field
+              name={`${specimen}.name`}
+              type="text"
+              component={renderField}
+              label="Specimen Name"/>
+            <Field
+              name={`${specimen}.indication`}
+              type="text"
+              component={renderField}
+              label="Indication"/>
+        </div>
+        
+      </li>
+
+    )}
+
+    </div>
+
+)
+
+const MedicamentsForm = (props) => {
+  const { handleSubmit, pristine, reset, submitting } = props
+
+  return (
+    <form className='ui form' onSubmit={handleSubmit}>
+
+    <div className='three fields'>
+      <Field name="brand" type="text" component={renderField} label="Brand Name"/>
+      <Field name="manufacturer" type="text" component={renderField} label="Manufacturer"/>
+      <Field name="form" type="text" component={renderField} label="Pharmaceutical Form"/>
+    </div>
+
+
+      <FieldArray name="active_substance" component={renderSubstanceField}/>
+      <FieldArray name="species" component={renderSpeciesField}/>
+
+      <div>
+        <button className='ui primary button' type="submit" disabled={submitting}>Submit</button>
+        <button className='ui button' type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+      </div>
+    </form>
+  )
 }
 
-export default connect(null, { addMedicament })(MedicamentsForm);
+export default reduxForm({
+  form: 'fieldArrays',     // a unique identifier for this form
+  validate,
+
+  onSubmit: (data) => {   
+
+    addMedicament({data});
+
+   }
+
+})(MedicamentsForm)

@@ -64,7 +64,7 @@ export function serverRender(req,res) {
         location={req.url}
         context={context}
       >
-        <AdminApp/>
+        <Routes/>
 
       </ServerRouter>
 
@@ -94,7 +94,7 @@ export function serverRender(req,res) {
           location={req.url}
           context={context}
         >
-          <AdminApp/>
+          <Routes/>
         </ServerRouter>
       )
     }

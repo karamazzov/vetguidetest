@@ -3,7 +3,7 @@ import { Link, Match} from 'react-router';
 import { Admin } from './Admin';
 import MedicamentsPage  from './MedicamentsPage';
 import AdminAuthPage from './AdminAuthPage';
-import MedicamentsForm from './MedicamentsForm';
+import MedicamentsFormContainer from './MedicamentsFormContainer';
 
 class AdminApp extends Component {
   render() {
@@ -22,7 +22,7 @@ class AdminApp extends Component {
 
             <Match exactly pattern='/admin' component={AdminAuthPage} />
             <Match exactly pattern='/admin/medicaments' component={MedicamentsPage} />
-            <Match exactly pattern='/admin/medicaments/new' component={MedicamentsForm} />
+            <Match exactly pattern='/admin/medicaments/new' component={MedicamentsFormContainer} />
 
         </div>
 

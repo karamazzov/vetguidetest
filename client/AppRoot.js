@@ -18,7 +18,7 @@ export default function AppRoot(props) {
 
   	<Provider store={props.store}>
 
-    	<AdminApp />
+    	<Routes/>
 
      </Provider>
 

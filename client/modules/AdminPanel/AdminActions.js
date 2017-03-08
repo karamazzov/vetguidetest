@@ -1,5 +1,7 @@
 export const SET_MEDICAMENTS = 'SET_MEDICAMENTS';
 
+import callApi from '../../util/apiCaller';
+
 function handleResponse(response) {
 
 	if(response.ok){
@@ -44,20 +46,20 @@ export function fetchMedicaments() {
 
 export function addMedicament(data) {
 
-	return dispatch => {
+	console.log(data)
 
-		return fetch('/medications', {
+  return (dispatch) => {
 
-			method: 'post',
-			body: JSON.stringify(data),
-			headers: {
-        		"Content-Type": "application/json"
-      		}
+  	console.log(data)
 
-		}).then(handleResponse)
-
-		.catch((err) => console.log(err));
-
-	}
-
+    return callApi('posts', 'post', {
+      post: {
+        name: data.name,
+        title: data.title,
+        content: data.content,
+      },
+    }).then(res => dispatch(addPost(res.post)));
+  };
 }
+
+//
