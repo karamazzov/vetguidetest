@@ -17,20 +17,46 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
   </div>
 )
 
+const renderIndications = ({ fields, meta: { error } }) => (
+
+    <div>
+
+    {fields.map((indication, index) =>
+      <li className={styles.list} key={index}>
+        <button
+          className='ui negative button'
+          type="button"
+          title="Remove Indication"
+          onClick={() => fields.remove(index)}>Remove Indication #{ index + 1 }</button>
+        <Field
+          name={indication}
+          type="text"
+          component={renderField}
+          label={`Indication #${index + 1}`}/>
+      </li>
+    )}
+
+     <button className='ui basic button' type="button" onClick={() => fields.push()}>Add Indication</button>
+
+    {error && <li className="error">{error}</li>}
+
+    </div>
+ 
+  )
+
 const renderSubstanceField = ({ fields, meta: { touched, error } }) => (
 
    <div className={styles.activesubstance}>
 
-      <button className='ui basic button' type="button" onClick={() => fields.push({})}>New Active Substance</button>
-     
-   
+
+     <button className={styles.new} type="button" onClick={() => fields.push({})}>
+     New Active Substance
+     </button>
+
 
     {fields.map((as, index) =>
-      <li key={index}>
-        <button
-          type="button"
-          title="Remove Active Substance"
-          onClick={() => fields.remove(index)}/>
+      <li className={styles.list} key={index}>
+       
         <h4 className="ui dividing header">Active Substance #{index + 1}</h4>
          <div className='three fields'>
             <Field
@@ -49,10 +75,17 @@ const renderSubstanceField = ({ fields, meta: { touched, error } }) => (
               component={renderField}
               label="Unit"/>
         </div>
+
+         <button
+          className={classnames('ui', 'negative', 'button')}
+          type="button"
+          title="Remove Active Substance"
+          onClick={() => fields.remove(index)}>Remove Active Substance #{ index + 1 }</button>
         
       </li>
 
     )}
+
 
     </div>
 
@@ -62,30 +95,36 @@ const renderSpeciesField = ({ fields, meta: { touched, error } }) => (
 
    <div className={styles.activesubstance}>
 
-      <button className='ui basic button' type="button" onClick={() => fields.push({})}>New Specimen</button>
+     <button className={styles.new} type="button" onClick={() => fields.push({})}>New Specimen</button>
      
-   
-   
-
     {fields.map((specimen, index) =>
-      <li key={index}>
-        <button
+      <li className={styles.list} key={index}>
+       
+        <h4 className="ui dividing header">Specimen #{index + 1}</h4>
+         <div className='ui grid'>
+            <div className='eight wide column'>
+
+                <Field
+                name={`${specimen}.name`}
+                type="text"
+                component={renderField}
+                label="Specimen Name"/>
+                
+            </div>
+            <div className='eight wide column'>
+
+                <FieldArray className='eight wide column'
+                name={`${specimen}.indications`}
+                component={renderIndications}/>
+
+            </div>
+        </div>
+
+         <button
+          className={classnames('ui', 'negative', 'button')}
           type="button"
           title="Remove Active Substance"
-          onClick={() => fields.remove(index)}/>
-        <h4 className="ui dividing header">Specimen #{index + 1}</h4>
-         <div className='three fields'>
-            <Field
-              name={`${specimen}.name`}
-              type="text"
-              component={renderField}
-              label="Specimen Name"/>
-            <Field
-              name={`${specimen}.indication`}
-              type="text"
-              component={renderField}
-              label="Indication"/>
-        </div>
+          onClick={() => fields.remove(index)}>Remove Specimen #{index + 1}</button>
         
       </li>
 
@@ -106,7 +145,6 @@ const MedicamentsForm = (props) => {
       <Field name="manufacturer" type="text" component={renderField} label="Manufacturer"/>
       <Field name="form" type="text" component={renderField} label="Pharmaceutical Form"/>
     </div>
-
 
       <FieldArray name="active_substance" component={renderSubstanceField}/>
       <FieldArray name="species" component={renderSpeciesField}/>

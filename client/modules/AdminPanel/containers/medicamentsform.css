@@ -10,3 +10,25 @@
 	margin-bottom:10px;
 
 }
+
+.list {
+
+	list-style:none;
+	padding:10px;
+
+}
+
+.new {
+
+	border-radius:5px;
+	padding:5px;
+	color:white;
+	height: 40px;
+	width:auto;
+	background-color:#13ef29;
+	float:right;
+	border:none;
+	outline:none;
+
+}
+
