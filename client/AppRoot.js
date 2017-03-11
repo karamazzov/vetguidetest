@@ -16,13 +16,13 @@ export default function AppRoot(props) {
 
   	<BrowserRouter>
 
-  	<Provider store={props.store}>
+  		<Provider store={props.store}>
 
-    	<Routes/>
+    		<Routes/>
 
-     </Provider>
+    	</Provider>
 
-    	</BrowserRouter>
+    </BrowserRouter>
   );
 }
 

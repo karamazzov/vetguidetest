@@ -5,6 +5,9 @@ const validate = values => {
     errors.manufacturer = 'Required'
     errors.form = 'Required'
   }
+
+  return errors
+
 }
 
 export default validate

@@ -2,6 +2,8 @@ var webpack = require('webpack');
 var cssnext = require('postcss-cssnext');
 var postcssFocus = require('postcss-focus');
 var postcssReporter = require('postcss-reporter');
+var syntax = require('postcss-scss');
+
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -36,15 +38,13 @@ module.exports = {
 
   module: {
     loaders: [
+
+       {
+          test: /\.scss$/,
+          loader: 'style-loader!css-loader?localIdentName=[name]__[local]__[hash:base64:5]&modules&importLoaders=1&sourceMap!sass-loader',
+      },
+
       {
-        test: /\.css$/,
-        exclude: /node_modules/,
-        loader: 'style-loader!css-loader?localIdentName=[name]__[local]__[hash:base64:5]&modules&importLoaders=1&sourceMap!postcss-loader',
-      }, {
-        test: /\.css$/,
-        include: /node_modules/,
-        loaders: ['style-loader', 'css-loader'],
-      }, {
         test: /\.jsx*$/,
         exclude: [/node_modules/, /.+\.config.js/],
         loader: 'babel',
@@ -81,5 +81,10 @@ module.exports = {
     postcssReporter({
       clearMessages: true,
     }),
+
+    postcss(plugins).process(scss, { syntax: syntax }).then(function (result) {
+    result.content // SCSS with transformations
+    }),
+
   ],
 };

@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { Field, FieldArray, reduxForm } from 'redux-form'
 import validate from './validate'
-import styles from './medicamentsform.css';
+import styles from './medicamentsform.scss';
 
 const renderField = ({ input, label, type, meta: { touched, error } }) => (
   <div className='field'>
     <label>{label}</label>
     <div>
       <input {...input} type={type} placeholder={label}/>
-      {touched && error && <span>{error}</span>}
+      {touched && error && <span className='error'>{error}</span>}
     </div>
   </div>
 )

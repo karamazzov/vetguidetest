@@ -1,5 +1,4 @@
-.activesubstance {
-
+.activesubstance{
 	padding: 10px;
 	background-color:transparent;
 	min-height:200px;
@@ -9,17 +8,7 @@
 	width:100%;
 	margin-bottom:10px;
 
-}
-
-.list {
-
-	list-style:none;
-	padding:10px;
-
-}
-
-.new {
-
+	.new{
 	border-radius:5px;
 	padding:5px;
 	color:white;
@@ -29,6 +18,11 @@
 	float:right;
 	border:none;
 	outline:none;
-
 }
+	
+	};
 
+.list{
+	list-style:none;
+	padding:10px;
+}

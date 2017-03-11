@@ -1,6 +1,7 @@
 var cssnext = require('postcss-cssnext');
 var postcssFocus = require('postcss-focus');
 var postcssReporter = require('postcss-reporter');
+var syntax = require('postcss-scss');
 
 var cssModulesIdentName = '[name]__[local]__[hash:base64:5]';
 if (process.env.NODE_ENV === 'production') {
@@ -22,9 +23,8 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.css$/,
-        exclude: /node_modules/,
-        loader: 'style-loader!css-loader?localIdentName=' + cssModulesIdentName + '&modules&importLoaders=1&sourceMap!postcss-loader',
+          test: /\.scss$/,
+          loaders: 'css-loader/locals?localIdentName=[name]__[local]__[hash:base64:5]&modules&importLoaders=1!sass-loader',
       },
       {
         test: /\.jpe?g$|\.gif$|\.png$|\.svg$/i,
@@ -40,5 +40,10 @@ module.exports = {
     postcssReporter({
       clearMessages: true,
     }),
+
+    postcss(plugins).process(scss, { syntax: syntax }).then(function (result) {
+    result.content // SCSS with transformations
+    }),
+
   ],
 };

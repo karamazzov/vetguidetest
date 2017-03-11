@@ -34,7 +34,6 @@ export const Routes = () => (
  
   <div>
 
-    <Match exactly pattern='/' component={App} />
     <Match pattern='/admin' component={AdminApp} />
 
   </div>
