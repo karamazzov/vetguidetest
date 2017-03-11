@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.Types.ObjectId;
-
+var jwt = require('jsonwebtoken');
 
 
 
@@ -17,5 +17,19 @@ userSchema.add({
     num_of_licences: {type: Number, required: true, default: 0},
 });
 
+userSchema.methods.generateJWT = function() {
+
+    // set expiration to 60 days
+    var today = new Date();
+    var exp = new Date(today);
+    exp.setDate(today.getDate() + 60);
+
+    return jwt.sign({
+        _id: this._id,
+        username: this.username,
+        type: this.type,
+        exp: parseInt(exp.getTime() / 1000),
+    }, 'ilovemybroxyploxydoxyjoxypeksivelebitmiki');
+};
 
 module.exports = mongoose.model('User', userSchema, 'users');

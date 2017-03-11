@@ -18,8 +18,19 @@ import config from '../webpack.config.dev';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
+//Passport dependencies 
+import passport from 'passport';
+import 'config/passport.js';
+
+//routes
+import indexRoutes from 'api/routes/index';
+import medicationRoutes from 'api/routes/medications';
+import userRoutes from 'api/routes/users';
+
 // Initialize the Express App
 const app = new Express();
+
+
 
 // Run Webpack dev server in development mode
 if (process.env.NODE_ENV === 'development') {
