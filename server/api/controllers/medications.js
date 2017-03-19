@@ -57,8 +57,8 @@ export function medicationsReadAll (req, res){
  * @returns void
  */
  export function medicationsCreateOne (req, res){
-    if(req.body)
-        let medication = new Medication({
+    if(req.body){
+        var medication = new Medication({
             brand: req.body.brand,
             manufacturer: req.body.manufacturer,
             form: req.body.form,
@@ -83,7 +83,7 @@ export function medicationsReadAll (req, res){
     }
     else
     {
-        endJsonResponse(res, 404, {"message":"body doesn't exist"});
+        sendJsonResponse(res, 404, {"message":"body doesn't exist"});
     }
  }
 
@@ -139,20 +139,11 @@ export function medicationsReadAll (req, res){
                     }
                 });
             }
-        }
+        });
     }
+    
  }
 
-  brand: { type: 'String', required: true },
-  manufacturer: { type: 'String', required: true},
-  form: {type: 'String', required: true},
-  packaging: {type: 'String', required: true},
-  active_substance: [{intensity: String, name: String,  unit: String}],
-  species: [{ indications: [String], name: String}],
-  warnings: {type: 'String', required: true},
-  undesired_reactions: {type: 'String', required: true},
-  counterindications: {type: 'String', required: true},
-  dateAdded: { type: 'Date', default: Date.now, required: true },
 
 
  /**
@@ -161,7 +152,7 @@ export function medicationsReadAll (req, res){
  * @param res
  * @returns void
  */
-export medicationsDeleteOne ( req, res ) {
+export function medicationsDeleteOne ( req, res ) {
     var medicationsid = req.params.medicationsid;
 
     if(req.params && medicationsid) {

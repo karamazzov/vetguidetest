@@ -66,21 +66,20 @@ export function usersReadOne (req, res){
 
 export function usersCreateOne(req, res){
     if(req.body){
-        let user = new User({
+        var user = new User({
             username: req.body.username,
             password: req.body.password,
             name: req.body.name,
             surname: req.body.surname,
-            email: req.body.email
+            email: req.body.email,
             phone: req.body.phone,
             address: req.body.address
         });
         user.save((err) => {
             if(err){
-                sendJsonResponse(res, 404, err):
+                sendJsonResponse(res, 404, err);
                 return;
-            }
-            else{
+            }else{
                 sendJsonResponse(res, 200, user);
             }
         });
@@ -116,7 +115,7 @@ export function usersCreateOne(req, res){
                         return;
                     }
                     else{
-                        sendJsonResponse(res, 200, {"message", "user deleted" + user });
+                        sendJsonResponse(res, 200, {"message": "user deleted" + user });
                     }
                 });
             }

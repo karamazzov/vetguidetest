@@ -1,14 +1,14 @@
 import * as UserController from '../controllers/users';
 import {Router} from 'express';
 
-const router = new Router();
+const userRouter = new Router();
 
-router.route('/users').get(UserController.usersReadAll):
-router.route('/users/:userid').get(UserController.usersReadOne);
-router.route('/users').post(UserController.usersCreateOne);
-router.route('/users/:userid').delete(UserController.usersDeleteOne);
-router.route('/users/auth').get(UserController.usersAuth);
+userRouter.route('/users').get(UserController.usersReadAll);
+userRouter.route('/users/:userid').get(UserController.usersReadOne);
+userRouter.route('/users').post(UserController.usersCreateOne);
+userRouter.route('/users/:userid').delete(UserController.usersDeleteOne);
+//userRouter.route('/users/auth').get(UserController.usersAuth);
 
 
-export default router;
+export default userRouter;
 

@@ -24,8 +24,8 @@ import passport from 'passport';
 
 //routes
 import router from './api/routes/index';
-//import medicationRoutes from './api/routes/medications';
-//import userRoutes from './api/routes/users';
+import medicationRouter from './api/routes/medications';
+import userRouter from './api/routes/users';
 
 // Initialize the Express App
 const app = new Express();
