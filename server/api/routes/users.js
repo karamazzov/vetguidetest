@@ -1,10 +1,14 @@
-var express = require('express');
-var router = express.Router();
-var ctrlUsers = require('../controllers/users');
+import * as UserController from '../controllers/users';
+import {Router} from 'express';
 
-router.get('/users', ctrlUsers.usersReadAll);
-router.get('/users/:agencyid', ctrlUsers.usersReadOne);
-router.post('/users', ctrlUsers.usersCreateOne );
-router.delete('/users/:agencyid', ctrlUsers.usersDeleteOne);
-router.get('/users/auth', ctrlUsers.usersAuth);
-module.exports = router;
+const router = new Router();
+
+router.route('/users').get(UserController.usersReadAll):
+router.route('/users/:userid').get(UserController.usersReadOne);
+router.route('/users').post(UserController.usersCreateOne);
+router.route('/users/:userid').delete(UserController.usersDeleteOne);
+router.route('/users/auth').get(UserController.usersAuth);
+
+
+export default router;
+

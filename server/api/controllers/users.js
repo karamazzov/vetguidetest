@@ -1,112 +1,151 @@
-var mongoose = require('mongoose');
-var User = require('../models/user');
 
-var sendJsonResponse = function(res, status, content) {
+import User from '../models/user';
+
+let sendJsonResponse = function(res, status, content) {
     res.status(status);
     res.json(content);
 }
 
+/**
+ * Read all users
+ * @param req
+ * @param res
+ * @returns void
+ */
 
-module.exports.usersReadAll = function(req, res) {
+ export function usersReadAll (req, res){
     User.find({})
-    .exec(function(err, users) {
-        if(!users) {
+    .exec(( err, users)=>{
+        if(!users){
             sendJsonResponse(res, 404, {"message":"users not found"});
             return;
-        } else if(err) {
+        }
+        else if(err){
             sendJsonResponse(res, 404, err);
             return;
         }
         sendJsonResponse(res, 200, users);
-    })
-}
+    });
+ }
 
-module.exports.usersReadOne = function(req, res) {
-    if(req.params && req.params.userid) {
+/**
+ * Read a user
+ * @param req
+ * @param res
+ * @returns void
+ */
+
+export function usersReadOne (req, res){
+    if(req.params && req.params.userid){
         User.findById(req.params.userid)
-        .exec(function(err, user) {
-            if(!user) {
+        .exec((err, user)=>{
+            if(!user){
                 sendJsonResponse(res, 404, {"message":"user not found"});
                 return;
-            } else if (err) {
+            }
+            else if (err){
                 sendJsonResponse(res, 404, err);
                 return;
-            } 
+            }
             sendJsonResponse(res, 200, user);
-        })
+        });
     }
-    else {
+    else{
         sendJsonResponse(res, 404, {"message": "No user id in request"});
-    }  
+    }
+    
 }
 
-module.exports.usersCreateOne = function(req, res) {
 
-    if(req.body) {
-        var post = new User({
+/**
+ * Create a user
+ * @param req
+ * @param res
+ * @returns void
+ */
+
+export function usersCreateOne(req, res){
+    if(req.body){
+        let user = new User({
             username: req.body.username,
-            password: req.body.password, // proveriti kakva sifra ide ovde, da li je hashovana ili ne
-            email: req.body.email,
+            password: req.body.password,
+            name: req.body.name,
+            surname: req.body.surname,
+            email: req.body.email
             phone: req.body.phone,
-            address: req.body.address,
-            apartments: []
+            address: req.body.address
         });
-        post.save(function (err) {
-            if (err) {
-                sendJsonResponse(res, 404, err);
+        user.save((err) => {
+            if(err){
+                sendJsonResponse(res, 404, err):
                 return;
             }
-            else {
-                sendJsonResponse(res, 200, post);
+            else{
+                sendJsonResponse(res, 200, user);
             }
         });
     }
     else {
-		res.render('error')
-        sendJsonResponse(res, 404, {"message":"body doesn't exist"})
+        res.render('error');
+        sendJsonResponse(res, 404, {"message": "body doesn't exist"});
     }
 }
 
-module.exports.usersDeleteOne = function(req, res) {
-    var userid = req.params.userid;
 
-    if(req.params && userid) {
+/**
+ * Deleta a user
+ * @param req
+ * @param res
+ * @returns void
+ */
+
+ export function usersDeleteOne(req, res){
+    let userid = req.params.id;
+
+    if(req.params && userid){
         User.findById(userid)
-        .exec(function(err, user) {
-            if(err) {
+        .exec(function(err, user){
+            if(err){
                 sendJsonResponse(res, 404, {"message":"userid not found"});
                 return;
             }
-            else {
-                user.remove(function(err) {
-                    if (err) {
+            else{
+                user.remove((err)=>{
+                    if(err){
                         sendJsonResponse(res, 404, err);
                         return;
                     }
-                    else {
-                        sendJsonResponse(res, 200, {"message":"user deleted " + user});
+                    else{
+                        sendJsonResponse(res, 200, {"message", "user deleted" + user });
                     }
                 });
             }
         });
     }
-}
+ }
 
-module.exports.usersUpdateOne = function(req, res) {
-    var userid = req.params.userid;
+/**
+ * Update a user
+ * @param req
+ * @param res
+ * @returns void
+ */
 
-    if(req.params && userid) {
+ export function usersUpdateOne(req, res){
+    let userid = req.params.userid;
+
+    if(req.params && userid){
         User.findById(userid)
-        .exec(function(err,user) {
-            if(err) {
+        .exec((err, user)=>{
+            if(err){
                 sendJsonResponse(res, 404, err);
                 return;
             }
-            if(!user) {
+            if(!user){
                 sendJsonResponse(res, 404, {
-                    "message" : "userid not found"
+                    "message": "userid not found"
                 });
-            } 
+            }
             else {
                 if(req.body.username)
                     user.username = req.body.username;
@@ -114,11 +153,15 @@ module.exports.usersUpdateOne = function(req, res) {
                     user.password = req.body.password; // proveriti kakva sifra ide ovde, da li je hashovana ili ne
                 if(req.body.email)
                     user.email = req.body.email;
+                if(req.body.name)
+                    user.name = req.body.name;
+                if(req.body.surname)
+                    user.surname = req.body.surname;
                 if(req.body.phone)
                     user.phone = req.body.phone;
                 if(req.body.address)
                     user.address = req.body.address;
-                user.save(function(err, user) {
+                user.save((err, user)=>{
                     if(err) {
                         sendJsonResponse(res, 404, err);
                         return;
@@ -130,4 +173,5 @@ module.exports.usersUpdateOne = function(req, res) {
             }
         });
     }
-}
+ }
+

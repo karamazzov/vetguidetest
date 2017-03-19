@@ -1,11 +1,12 @@
-var express = require('express');
-var router = express.Router();
-var ctrlMedications = require('../controllers/medications');
+import {Router} from 'express';
+const router = new Router();
+import * as MedicationController from '../controllers/medications';
 
 
-router.get('/medications', ctrlMedications.usersReadAll);
-router.get('/medications/:medicationsReferenceId', ctrlMedications.usersReadOne);
-router.post('/medications', upload.single('file'), ctrlMedications.usersCreateOne );
-router.delete('/medications/:apartmentForSaleReferenceId', ctrlMedications.usersDeleteOne);
+router.route('/medications').get( MedicationController.medicationsReadAll);
+router.route('/medications/:medicationsid').get( MedicationController.medicationsReadOne);
+router.route('/medications').post(MedicationController.medicationsCreateOne);
+router.route('/medication/:medicationsid').put(MedicationController.medicationsUpdateOne);
+router.route('/medications/:apartmentForSaleReferenceId').delete( MedicationController.medicationsDeleteOne);
 
 module.exports = router;

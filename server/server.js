@@ -20,12 +20,12 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 
 //Passport dependencies 
 import passport from 'passport';
-import 'config/passport.js';
+//import 'config/passport.js';
 
 //routes
-import indexRoutes from 'api/routes/index';
-import medicationRoutes from 'api/routes/medications';
-import userRoutes from 'api/routes/users';
+import router from './api/routes/index';
+//import medicationRoutes from './api/routes/medications';
+//import userRoutes from './api/routes/users';
 
 // Initialize the Express App
 const app = new Express();

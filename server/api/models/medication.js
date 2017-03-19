@@ -1,27 +1,18 @@
-var mongoose = require('mongoose');
-var ObjectId = mongoose.Schema.Types.ObjectId;
+import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
 
-var medicationSchema = new mongoose.Schema();
-medicationSchema.add({
-    name: {type: String, required: true},
-    manufacturer:{ type: String, required: true},
-    form: { type: String, required: true},
-    packaging: { type: String, required: true},
-    active_substances: [{ 
-                            name: String, required: true,
-                            quantity: Number, required: true,
-                            quantity_type: String, required: true,
-                            }],
-    indications: [{ 
-                    animal_type: String, required: true,
-                    text: String, required: true,
-                    keywords: [String], required: true
-                }],
-    warnings: { type: String, required: true},
-    undesired_reactions: { type: String, required: true},
-    counterindications: {type: String, required: true},
-    carence: { type:Number, required: true}
-    
+const medicationSchema = new Schema({
+  brand: { type: 'String', required: true },
+  manufacturer: { type: 'String', required: true},
+  form: {type: 'String', required: true},
+  packaging: {type: 'String', required: true},
+  active_substance: [{intensity: String, name: String,  unit: String}],
+  species: [{ indications: [String], name: String}],
+  warnings: {type: 'String', required: false},
+  undesired_reactions: {type: 'String', required: false},
+  counterindications: {type: 'String', required: false},
+  dateAdded: { type: 'Date', default: Date.now, required: true },
 });
 
-module.exports = mongoose.model('Medication', medicationSchema, 'medications');
+export default mongoose.model('Medication', medicationSchema);
+
