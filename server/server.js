@@ -70,6 +70,7 @@ app.use(Express.static(path.resolve(__dirname, '../dist')));
 app.use('/api', posts);
 
 
+
 app.use(serverRender)
 
 // start app

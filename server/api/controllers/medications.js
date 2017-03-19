@@ -70,7 +70,7 @@ export function medicationsReadAll (req, res){
             counterindications: req.body.counterindications,
         });
 
-        medication.save((err) => {
+        medication.save((err) => { 
             if (err) {
                 sendJsonResponse(res, 404, err);
 
@@ -100,7 +100,7 @@ export function medicationsReadAll (req, res){
 
     if(req.params && medicationsid){
         Medication.findById(medicationsid)
-        .exec((err, medication) =>{
+        .exec((err, medication) => {
             if(err){
                 sendJsonResponse(res, 404, err);
                 return;

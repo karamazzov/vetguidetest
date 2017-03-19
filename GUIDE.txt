@@ -1,20 +1,41 @@
-NODE/EXPRESS server aplikacija uvek ima arhitekturu koda sledeceg tipa:
-Client i Server folder
+1. Overview
+	
 
-U Server folderu se najcesce nalazi "app.js", "index.js" ili "server.js" javascript fajl koji je zapravo sama aplikacija
-i povlaci sve potrebne module (koji su vec napisani, i uzeti sa Node Package Managera)
+2. Server folder
+	Folder that contains server-side the node/express application. This part of code handles API requests and communicates with the database to retrieve the information that is needed.
+	2.1 API folder
+		Three subcategories (API routes, Controllers and Models) are located in this folder. Routes handle the events that come from client based on the relative path of the url. example: /api/medicaments/all is a path that can be handled by the express router.
 
-Posto zelimo da ostvarimo "napisi MODEL (klasu medikacija i korisnika) jednom, a koristi svuda", koristimo API za komuniciranje sa 
-klijentom. Klijent na endpointima trazi podatke od servera, na sta mu server ukoliko je autorizovan za date podatke vraca podatke
-u JSON formatu.
+		2.1.1 API Routes
+			Five routes that Routes files match against are:
+			GET(one item) {url: www.vetguide.co/api/item/:itemID}
+			GET(all items)	{url: www.vetguide.co/api/items}
+			CREATE(one item) {url: www.vetguide.co/api/items} 
+			UPDATE(one item) {url: www.vetguide.co/api/item/:itemID}
+			DELETE(one item) {url: www.vetguide.co/api/item/:itemID}
+		2.1.2 API Controllers
+			Controllers are functions that are passed to the router and are doing all the work that should be done when the route gets activated.
 
-Controllers u folderu server upravo sluze toj logici pakovanja podataka u JSON.
+		2.1.3 API Models
+			Models are classes that represent in the code the data that is in the database. 
+			{ Medication model }
+			{ User model }
 
-Models u folderu server opisuju format koji ce podaci uzimati u bazi.
+	2.2 UTIL folder
+		React utilities that are used for asynchronous communication between the server and the client.
 
-Routes definisu na koje URL-ove ce koji API da odgovara.
+	2.3 CONFIG folder
+		Passport(authentication) and database(mongodb) configuration. 
+		Passport configuration is where we define the strategies of signing up and loging in. (facebook, google, twitter, local login)
 
-Util folder sluzi integraciji sa Reactom/Reduxom na klijentu.
+	2.4 SERVER.JS file
+		File in which all of other files and modules are included and set up to work together in harmony. 
+		Server.js is the root file of the web application. Mongoose (mongoDB middleware module), routes objects, and all other modules such as logger for the terminal etc are included. 
+		Some error handling is done in this file, as well as a check for the type of environment in which the app is running ( development/production/test ).
+	
+3. Client folder
+
+
 
 
 // Redux Deo - Mihajlo
