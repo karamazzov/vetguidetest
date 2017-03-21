@@ -71,6 +71,7 @@ app.use('/api/medications', medicationRouter);
 app.use('/api/users', userRouter);
 
 
+
 app.use(serverRender)
 
 // start app
