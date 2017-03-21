@@ -10,6 +10,8 @@ import routes from './routes';
 import AdminApp from './modules/AdminPanel/containers/AdminApp';
 import { Routes } from './routes';
 
+import './styleguide/main.scss'
+
 
 export default function AppRoot(props) {
   return (

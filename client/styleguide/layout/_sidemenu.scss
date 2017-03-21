@@ -1,0 +1,36 @@
+.menuitem {
+
+	font-family:$font;
+	font-size:$font-size;
+	font-weight: $font-bold;
+	color:$mid-grey;
+	margin-top:20px;
+	margin-left:20px;
+	transition: 0.3s;
+
+	&:hover {
+
+		color: $dark-grey;
+
+	}
+
+
+}
+
+.active {
+
+	color: $brand-color;
+
+}
+
+.sidemenu {
+
+	height:100%;
+	width:inherit;
+	padding:20px;
+	background-color:$light-grey;
+	position:fixed;
+	display:flex;
+	flex-direction:column;
+
+}

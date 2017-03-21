@@ -1,6 +1,8 @@
 import { SET_MEDICAMENTS } from './AdminActions';
 
-export default function medicaments(state=[], action={})  {
+const initialState = { medicaments: [] };
+
+export default function medicaments(state=initialState, action={})  {
 
 	switch(action.type){
 

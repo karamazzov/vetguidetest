@@ -3,14 +3,23 @@ import { addMedicament } from '.././AdminActions'
 import { connect } from 'react-redux';
 import MedicamentsForm from './MedicamentsForm'
 
+
 class MedicamentsFormContainer extends Component {
+
+
+	handleSubmit = (data) => {   
+
+    this.props.dispatch(addMedicament({data}))
+
+   }
+
 
 
 	render() {
 
 		return(
 
-		<MedicamentsForm />
+		<MedicamentsForm mySubmit={this.handleSubmit}/>
 
 		)
 
@@ -18,4 +27,4 @@ class MedicamentsFormContainer extends Component {
 
 }
 
-export default connect(null, { addMedicament } )(MedicamentsFormContainer);
+export default connect()(MedicamentsFormContainer);

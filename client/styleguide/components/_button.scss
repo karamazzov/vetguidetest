@@ -1,0 +1,39 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the button component.
+// -----------------------------------------------------------------------------
+
+.btn {
+
+	font-family: $font;
+	font-size: $font-size;
+	font-weight:$font-bold;
+	min-width:100px;
+	height:40px;
+	border-radius:3px;
+	background-color:$button-default-color;
+	color:white;
+	outline:none;
+	border:none;
+
+	&-success {
+
+		background-color: $button-success-color;
+
+	}
+
+	&-danger {
+
+		background-color: $button-danger-color;
+
+	}
+
+	&-form {
+
+		position:relative;
+		float:right;
+
+	}
+
+
+
+}

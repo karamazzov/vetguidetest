@@ -24,7 +24,7 @@ module.exports = {
     loaders: [
       {
           test: /\.scss$/,
-          loaders: 'css-loader/locals?localIdentName=[name]__[local]__[hash:base64:5]&modules&importLoaders=1!sass-loader',
+          loaders: 'css-loader/locals?localIdentName=[name]__[local]__[hash:base64:5]&importLoaders=1!sass-loader',
       },
       {
         test: /\.jpe?g$|\.gif$|\.png$|\.svg$/i,

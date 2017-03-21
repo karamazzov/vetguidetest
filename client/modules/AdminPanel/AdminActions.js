@@ -34,7 +34,7 @@ export function fetchMedicaments() {
 
 	return dispatch => {
 
-		fetch('/medications')
+		fetch('/api/medications')
 		.then(res => res.json())
 		.then(data => dispatch(setMedicaments(data.medicaments)))
 
@@ -46,19 +46,17 @@ export function fetchMedicaments() {
 
 export function addMedicament(data) {
 
-	console.log(data)
 
   return (dispatch) => {
 
-  	console.log(data)
-
-    return callApi('posts', 'post', {
-      post: {
-        name: data.name,
-        title: data.title,
-        content: data.content,
+    return callApi('medications', 'post', {
+      medication: {
+        brand: data.brand,
+        manufacturer: data.manufacturer,
+        form: data.form,
       },
-    }).then(res => dispatch(addPost(res.post)));
+    }).then(res => dispatch(setMedicaments(res.medication)))
+      .catch((err) => console.log(err));
   };
 }
 

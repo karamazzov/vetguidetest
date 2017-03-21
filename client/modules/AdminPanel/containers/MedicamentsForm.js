@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { Field, FieldArray, reduxForm } from 'redux-form'
 import validate from './validate'
-import styles from './medicamentsform.scss';
+
 
 const renderField = ({ input, label, type, meta: { touched, error } }) => (
   <div className='field'>
@@ -22,7 +22,7 @@ const renderIndications = ({ fields, meta: { error } }) => (
     <div>
 
     {fields.map((indication, index) =>
-      <li className={styles.list} key={index}>
+      <li  key={index}>
         <button
           className='ui negative button'
           type="button"
@@ -46,16 +46,29 @@ const renderIndications = ({ fields, meta: { error } }) => (
 
 const renderSubstanceField = ({ fields, meta: { touched, error } }) => (
 
-   <div className={styles.activesubstance}>
+   <div className='form-section'>
 
-
-     <button className={styles.new} type="button" onClick={() => fields.push({})}>
-     New Active Substance
-     </button>
-
+       <h4 className="ui dividing header">Active Substance #1</h4>
+         <div className='three fields'>
+            <Field
+              name='name'
+              type="text"
+              component={renderField}
+              label="Active Substance Name"/>
+            <Field
+              name='intensity'
+              type="text"
+              component={renderField}
+              label="Active Substance Intensity"/>
+            <Field
+              name='unit'
+              type="text"
+              component={renderField}
+              label="Unit"/>
+        </div>
 
     {fields.map((as, index) =>
-      <li className={styles.list} key={index}>
+      <li key={index}>
        
         <h4 className="ui dividing header">Active Substance #{index + 1}</h4>
          <div className='three fields'>
@@ -86,6 +99,11 @@ const renderSubstanceField = ({ fields, meta: { touched, error } }) => (
 
     )}
 
+      <button className='btn btn-success btn-form' type="button" onClick={() => fields.push({})}>
+      New
+      </button>
+
+
 
     </div>
 
@@ -93,12 +111,10 @@ const renderSubstanceField = ({ fields, meta: { touched, error } }) => (
 
 const renderSpeciesField = ({ fields, meta: { touched, error } }) => (
 
-   <div className={styles.activesubstance}>
-
-     <button className={styles.new} type="button" onClick={() => fields.push({})}>New Specimen</button>
+   <div className='form-section'>
      
     {fields.map((specimen, index) =>
-      <li className={styles.list} key={index}>
+      <li key={index}>
        
         <h4 className="ui dividing header">Specimen #{index + 1}</h4>
          <div className='ui grid'>
@@ -130,15 +146,17 @@ const renderSpeciesField = ({ fields, meta: { touched, error } }) => (
 
     )}
 
+     <button className='btn btn-success btn-form' type="button" onClick={() => fields.push({})}>New</button>
+
     </div>
 
 )
 
 const MedicamentsForm = (props) => {
-  const { handleSubmit, pristine, reset, submitting } = props
+  const { handleSubmit, pristine, reset, submitting, mySubmit} = props
 
   return (
-    <form className='ui form' onSubmit={handleSubmit}>
+    <form className='ui form' onSubmit={handleSubmit(mySubmit)}>
 
     <div className='three fields'>
       <Field name="brand" type="text" component={renderField} label="Brand Name"/>
@@ -158,13 +176,8 @@ const MedicamentsForm = (props) => {
 }
 
 export default reduxForm({
+
   form: 'fieldArrays',     // a unique identifier for this form
   validate,
-
-  onSubmit: (data) => {   
-
-    addMedicament({data});
-
-   }
 
 })(MedicamentsForm)
