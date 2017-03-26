@@ -95,5 +95,9 @@ module.exports = {
     postcssReporter({
       clearMessages: true,
     }),
+    postcss(plugins).process(scss, { syntax: syntax }).then(function (result) {
+    result.content // SCSS with transformations
+    }),
+    
   ],
 };
