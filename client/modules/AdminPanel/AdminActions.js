@@ -21,6 +21,8 @@ function handleResponse(response) {
 
 export function setMedicaments(medicaments) {
 
+	console.log(medicaments + ' set medicaments action creator')
+
 	return {
 
 		type: SET_MEDICAMENTS,
@@ -55,8 +57,23 @@ export function addMedicament(data) {
         manufacturer: data.manufacturer,
         form: data.form,
       },
-    }).then(res => dispatch(setMedicaments(res.medication)))
-      .catch((err) => console.log(err));
+    }).then(res => console.log(res + ' add medicament action creator (POST)'))
+    .catch((err) => console.log(err));
+  };
+}
+
+export function getMedicaments(data) {
+
+	if(!data) { console.log('nemadata') }
+		console.log(data + '<-- undefined????')
+
+  return (dispatch) => {
+
+  	console.log('after')
+
+    return callApi('medications')
+    .then(res => console.log(res.medications + ' get response '))
+     .catch((err) => console.log(err));
   };
 }
 

@@ -29,6 +29,6 @@ export default function MedicamentsList({ medicaments }) {
 
 MedicamentsList.propTypes = {
 
-    medicaments: React.PropTypes.array.isRequired
+
 
 }

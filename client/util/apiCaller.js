@@ -13,15 +13,17 @@ export default function callApi(endpoint, method = 'get', body) {
   })
   .then(response => response.json().then(json => ({ json, response })))
   .then(({ json, response }) => {
+
+    console.log(json)
+
     if (!response.ok) {
       return Promise.reject(json);
-      console.log('maybe here?')
     }
 
     return json;
   })
   .then(
     response => response,
-    error => error
+    error => console.log(error + 'ERROR IS HERE MDFK')
   );
 }

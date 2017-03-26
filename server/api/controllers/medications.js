@@ -22,7 +22,8 @@ export function medicationsReadAll (req, res){
         sendJsonResponse(res, 404, err);
         return;
     }    
-    sendJsonresponse(res, 200, medications);
+    sendJsonResponse(res, 200, medications);
+
   });
 }
 
@@ -119,7 +120,7 @@ export function medicationsReadAll (req, res){
                     medication.form = req.body.form;
                 if(req.body.packaging)
                     medication.packaging = req.body.packaging;
-                if(req.body.active_substance)
+                if(req.body.active_substance)Connection
                     medication.active_substance = req.body.active_substance;
                 if(req.body.species)
                     medication.species = req.body.species;

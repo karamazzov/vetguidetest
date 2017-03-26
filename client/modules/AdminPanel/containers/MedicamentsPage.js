@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MedicamentsList from '.././presentational/MedicamentsList';
-import { fetchMedicaments } from '.././AdminActions';
+import { getMedicaments } from '.././AdminActions';
+import { getMedicamentsState } from '.././AdminReducer';
 
 class MedicamentsPage extends React.Component {
   
   componentDidMount() {
 
-    this.props.fetchMedicaments()
+    this.props.getMedicaments()
 
   }
 
@@ -30,7 +31,7 @@ class MedicamentsPage extends React.Component {
 MedicamentsPage.propTypes = {
 
     medicaments: React.PropTypes.array.isRequired,
-    fetchMedicaments: React.PropTypes.func.isRequired
+    getMedicaments: React.PropTypes.func.isRequired
 
 }
 
@@ -42,4 +43,4 @@ function mapStateToProps(state) {
 
 
 
-export default connect(mapStateToProps, { fetchMedicaments })(MedicamentsPage);
+export default connect(mapStateToProps, { getMedicaments })(MedicamentsPage);
